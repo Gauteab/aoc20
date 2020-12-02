@@ -23,6 +23,6 @@ part2 = viaNonEmpty head . map product . threeSums 2020
 
 main :: IO ()
 main = do
-  Just input <- traverse (readMaybe @Int . toString) . lines <$> readFileText "./day1.in"
+  Just input <- traverse (readMaybe @Int . toString) . lines <$> readFileText "./input/day1"
   print $ part1 input -- 858496
   print $ part2 input -- 263819430
