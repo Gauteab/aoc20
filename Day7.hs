@@ -37,6 +37,4 @@ part2 :: [Entry] -> Maybe Int
 part2 (Map.fromList -> input) = subtract 1 <$> go "shinygold"
   where
     go :: String -> Maybe Int
-    go bag = do
-      xs <- Map.lookup bag input
-      (+ 1) . sum <$> traverse (\(n, name) -> (* n) <$> go name) xs
+    go = flip Map.lookup input >=> fmap (succ . sum) . traverse (\(n, name) -> (* n) <$> go name)
