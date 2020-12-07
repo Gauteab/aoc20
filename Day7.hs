@@ -31,10 +31,10 @@ part1 :: [Entry] -> Int
 part1 input = length . nub . concatMap (map fst) . takeWhile (not . null) $ iterate f initial
   where
     initial = filter (hasBag "shinygold") input
-    f = concatMap $ \(name, _) -> filter (hasBag name) input
+    f = foldMap $ \(name, _) -> filter (hasBag name) input
 
 part2 :: [Entry] -> Maybe Int
 part2 (Map.fromList -> input) = subtract 1 <$> go "shinygold"
   where
     go :: String -> Maybe Int
-    go = flip Map.lookup input >=> fmap (succ . sum) . traverse (\(n, name) -> (* n) <$> go name)
+    go = flip Map.lookup input >=> (succ . sum <$>) . traverse (\(n, name) -> (* n) <$> go name)
