@@ -33,14 +33,10 @@ part1 input = length . nub . concatMap (map fst) . takeWhile (not . null) $ iter
     initial = filter (hasBag "shinygold") input
     f = concatMap $ \(name, _) -> filter (hasBag name) input
 
-part2 :: [Entry] -> Int
-part2 (Map.fromList -> input) = subtract 1 . fromJust $ go "shinygold"
+part2 :: [Entry] -> Maybe Int
+part2 (Map.fromList -> input) = subtract 1 <$> go "shinygold"
   where
     go :: String -> Maybe Int
     go bag = do
       xs <- Map.lookup bag input
-      case xs of
-        [] -> pure 1
-        _ -> do
-          products <- traverse (\(n, name) -> (* n) <$> go name) xs
-          pure $ 1 + sum products
+      (+ 1) . sum <$> traverse (\(n, name) -> (* n) <$> go name) xs
