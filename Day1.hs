@@ -1,6 +1,8 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
+module Day1 where
+
 import Control.Lens
 import qualified Data.Set as Set
 import Relude
